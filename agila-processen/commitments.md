@@ -1,7 +1,7 @@
 ## GRUPPKONTRAKT
 
 - Vilka dagar och tider jobbar vi?
-  Eftermiddagar efter kl17.
+  Eftermiddagar efter kl17 på vardagar.
 - Var träffas vi? Exempel: i skolan, online, på caféer m.m.
   Online.
 - Utöver Github Project, vilka kommunikationskanaler ska vi ha? Exempel: Slack, Discord, e-post...
