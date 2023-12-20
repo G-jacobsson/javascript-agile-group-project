@@ -6,4 +6,4 @@
 
 - We (Gert-Ove and Sebastian) need to train a bit more on writing JS to really get it into our thick sku... We simply need to write more code.
 
-- After tomorrows session we'll decide how to break down the remaining work and how to move forward in the project.
+- After tomorrows session we'll decide how to break down the remaining work and how to move forward in the project..
