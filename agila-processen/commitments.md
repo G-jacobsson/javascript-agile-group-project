@@ -19,3 +19,4 @@ Underskrivet av:
 Sebastian Flavet
 Nathalie Persson
 Gert-Ove Eng Jacobsson
+Igor Ristic
