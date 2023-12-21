@@ -71,11 +71,11 @@ function renderCart() {
     cartContainer.appendChild(cartPartialSum);
     cartContainer.appendChild(cartQuantity);
 
-    // Calculate partial sum for each item
+    // Calculate partial sum for separate items
     const partialSum = cartItem.price * cartItem.quantity;
     totalSum += partialSum;
 
-    // Format the price as Swedish currency for display
+    // Format the price as Swedish currency
     const formattedPrice = cartItem.price.toLocaleString('sv-SE', {
       style: 'currency',
       currency: 'SEK',
@@ -88,7 +88,8 @@ function renderCart() {
       style: 'currency',
       currency: 'SEK',
     })}`;
-    cartQuantity.innerText = `Antal ${cartItem.quantity}`;
+    // Commented out. Do we really need it?
+    //    cartQuantity.innerText = `Antal ${cartItem.quantity}`;
   });
 
   // Element for the total sum
