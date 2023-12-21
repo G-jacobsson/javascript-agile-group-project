@@ -65,21 +65,39 @@ function renderCart() {
     const cartProduct = document.createElement('div');
     const cartPartialSum = document.createElement('p');
     const cartQuantity = document.createElement('p');
-    const cartTotalSum = document.createElement('div');
 
     cartContainer.appendChild(cartTitle);
     cartContainer.appendChild(cartProduct);
     cartContainer.appendChild(cartPartialSum);
     cartContainer.appendChild(cartQuantity);
-    cartContainer.appendChild(cartTotalSum);
 
-    totalSum += cartItem.price;
+    // Calculate partial sum for each item
+    const partialSum = cartItem.price * cartItem.quantity;
+    totalSum += partialSum;
+
+    // Format the price as Swedish currency for display
+    const formattedPrice = cartItem.price.toLocaleString('sv-SE', {
+      style: 'currency',
+      currency: 'SEK',
+    });
 
     cartProduct.innerText = cartItem.name;
-    cartPartialSum.innerText = 'price ' + cartItem.price;
-    cartQuantity.innerText = `Quantity ${cartItem.quantity}`;
-    cartTotalSum.innerText = totalSum;
+    cartPartialSum.innerText = `Pris ${formattedPrice} x ${
+      cartItem.quantity
+    } = ${partialSum.toLocaleString('sv-SE', {
+      style: 'currency',
+      currency: 'SEK',
+    })}`;
+    cartQuantity.innerText = `Antal ${cartItem.quantity}`;
   });
+
+  // Element for the total sum
+  const cartTotalSum = document.createElement('div');
+  cartTotalSum.innerText = `Totalt: ${totalSum.toLocaleString('sv-SE', {
+    style: 'currency',
+    currency: 'SEK',
+  })}`;
+  cartContainer.appendChild(cartTotalSum);
 }
 
 if (productsContainer) {
