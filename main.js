@@ -22,7 +22,10 @@ function renderProducts() {
     productsContainer.appendChild(productDiv);
 
     productName.innerText = product.name;
-    productPrice.innerText = product.price;
+    productPrice.innerText = product.price.toLocaleString('sv-SE', {
+      style: 'currency',
+      currency: 'SEK',
+    });
     productImg.src = product.imgUrl;
     productImg.width = 200;
     productBtn.innerText = 'Buy';
