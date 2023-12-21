@@ -1,11 +1,14 @@
 import { products } from './products.js';
+
 const productsContainer = document.getElementById('products-container');
 const cartContainer = document.getElementById('cart-container');
 
-let cart = [];
+// Get from localStorage and parse back to array || if 'savedCart' doesn't exist= empty array
+const cartFromLS = JSON.parse(localStorage.getItem('savedCart')) || [];
 
 function renderProducts() {
   products.map((product) => {
+    // Product card
     const productDiv = document.createElement('div');
     const productName = document.createElement('h3');
     const productPrice = document.createElement('p');
@@ -38,12 +41,26 @@ function renderProducts() {
   });
 }
 
+function addProduct(idFromBtn) {
+  const foundItem = products.find((product) => product.id === idFromBtn);
+  const foundCartItem = cartFromLS.find((product) => product.id === idFromBtn);
+
+  if (foundCartItem) {
+    foundCartItem.quantity++;
+  } else {
+    cartFromLS.push(foundItem);
+  }
+
+  // Saves updated cart in localStorage
+  // key = choose a name to save
+  // value = serializing because we can't save an object
+  localStorage.setItem('savedCart', JSON.stringify(cartFromLS));
+}
+
 function renderCart() {
-  // Hämtar från LS och parsar tillbaka till array
-  const getCart = JSON.parse(localStorage.getItem('savedCart'));
   let totalSum = 0;
 
-  getCart.map((cartItem) => {
+  cartFromLS.map((cartItem) => {
     const cartTitle = document.createElement('h2');
     const cartProduct = document.createElement('div');
     const cartPartialSum = document.createElement('p');
@@ -59,37 +76,16 @@ function renderCart() {
     totalSum += cartItem.price;
 
     cartProduct.innerText = cartItem.name;
-    cartPartialSum.innerText = cartItem.price;
-    cartQuantity.innerText = cartItem.quantity;
+    cartPartialSum.innerText = 'price ' + cartItem.price;
+    cartQuantity.innerText = `Quantity ${cartItem.quantity}`;
     cartTotalSum.innerText = totalSum;
   });
-}
-if (cartContainer) {
-  renderCart();
-}
-
-function addProduct(id) {
-  const item = products.find((product) => product.id === id);
-  cart.push(item);
-
-  // Lägg till funktionalitet för kvantitet här
-
-  console.log(`you added ${id}`);
-  // updateCart();
-  console.log(cart);
-
-  // Sparar i LocalStorage och stringifierar
-  // key=cart, value=JSON.stringify(cart)
-  localStorage.setItem('savedCart', JSON.stringify(cart));
 }
 
 if (productsContainer) {
   renderProducts();
 }
 
-function updateCart() {
-  cartContainer.innerHTML = '';
-  cart.map((product) => {
-    cartContainer.innerHTML += `Product: ${product.name} Price:${product.price}`;
-  });
+if (cartContainer) {
+  renderCart();
 }
