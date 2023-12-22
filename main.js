@@ -61,6 +61,25 @@ function addProduct(idFromBtn) {
 }
 
 function renderCart() {
+  const cartTitle = document.createElement('h2');
+  cartTitle.innerText = 'Din varukorg';
+  cartContainer.appendChild(cartTitle);
+
+  const table = document.createElement('table');
+  const tableHead = document.createElement('thead');
+  const tableBody = document.createElement('tbody');
+  table.appendChild(tableHead);
+  table.appendChild(tableBody);
+
+  const headerRow = document.createElement('tr');
+  ['Produkt', 'Pris', 'Antal', 'Delsumma'].forEach((text) => {
+    const th = document.createElement('th');
+    this.innerText = text;
+    headerRow.appendChild(th);
+  });
+
+  tableHead.appendChild(headerRow);
+
   let totalSum = 0;
 
   if (cartFromLS.length > 0) {
@@ -117,6 +136,25 @@ function renderCart() {
   } else {
     cartContainer.innerHTML = '<p>Din varukorg är tom.</p>';
   }
+  cartFromLS.map((cartItem) => {
+    // const cartTitle = document.createElement('h2');
+    // const cartProduct = document.createElement('div');
+    // const cartPartialSum = document.createElement('p');
+    // const cartQuantity = document.createElement('p');
+    // const cartTotalSum = document.createElement('div');
+    // cartContainer.appendChild(cartTitle);
+    // cartContainer.appendChild(cartProduct);
+    // cartContainer.appendChild(cartPartialSum);
+    // cartContainer.appendChild(cartQuantity);
+    // cartContainer.appendChild(cartTotalSum);
+    // totalSum += cartItem.price;
+    // cartProduct.innerText = cartItem.name;
+    // cartPartialSum.innerText = 'price ' + cartItem.price;
+    // cartQuantity.innerText = `Quantity ${cartItem.quantity}`;
+    // cartTotalSum.innerText = totalSum;
+  });
+
+  cartContainer.appendChild(table);
 }
 
 if (productsContainer) {
