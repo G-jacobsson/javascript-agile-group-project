@@ -95,6 +95,7 @@ function renderCart() {
   } else {
     cartContainer.innerHTML = '<p>Din varukorg är tom.</p>';
   }
+
 }
 
 if (productsContainer) {
