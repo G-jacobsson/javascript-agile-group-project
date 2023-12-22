@@ -22,7 +22,10 @@ function renderProducts() {
     productsContainer.appendChild(productDiv);
 
     productName.innerText = product.name;
-    productPrice.innerText = product.price;
+    productPrice.innerText = product.price.toLocaleString('sv-SE', {
+      style: 'currency',
+      currency: 'SEK',
+    });
     productImg.src = product.imgUrl;
     productImg.width = 200;
     productBtn.innerText = 'Buy';
@@ -66,21 +69,40 @@ function renderCart() {
       const cartProduct = document.createElement('div');
       const cartPartialSum = document.createElement('p');
       const cartQuantity = document.createElement('p');
-      const cartTotalSum = document.createElement('div');
 
       cartContainer.appendChild(cartTitle);
       cartContainer.appendChild(cartProduct);
       cartContainer.appendChild(cartPartialSum);
       cartContainer.appendChild(cartQuantity);
-      cartContainer.appendChild(cartTotalSum);
 
-      totalSum += cartItem.price;
+      // Calculate partial sum for separate items
+      const partialSum = cartItem.price * cartItem.quantity;
+      totalSum += partialSum;
+
+      // Format the price as Swedish currency
+      const formattedPrice = cartItem.price.toLocaleString('sv-SE', {
+        style: 'currency',
+        currency: 'SEK',
+      });
 
       cartProduct.innerText = cartItem.name;
-      cartPartialSum.innerText = 'price ' + cartItem.price;
-      cartQuantity.innerText = `Quantity ${cartItem.quantity}`;
-      cartTotalSum.innerText = totalSum;
+      cartPartialSum.innerText = `Pris ${formattedPrice} x ${
+        cartItem.quantity
+      } = ${partialSum.toLocaleString('sv-SE', {
+        style: 'currency',
+        currency: 'SEK',
+      })}`;
+      // Commented out. Do we really need it?
+      //    cartQuantity.innerText = `Antal ${cartItem.quantity}`;
     });
+
+    // Element for the total sum
+    const cartTotalSum = document.createElement('div');
+    cartTotalSum.innerText = `Totalt: ${totalSum.toLocaleString('sv-SE', {
+      style: 'currency',
+      currency: 'SEK',
+    })}`;
+    cartContainer.appendChild(cartTotalSum);
 
     // Mock button for payment
     const payBtn = document.createElement('button');
@@ -95,7 +117,6 @@ function renderCart() {
   } else {
     cartContainer.innerHTML = '<p>Din varukorg är tom.</p>';
   }
-
 }
 
 if (productsContainer) {
