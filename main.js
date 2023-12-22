@@ -60,26 +60,42 @@ function addProduct(idFromBtn) {
 function renderCart() {
   let totalSum = 0;
 
-  cartFromLS.map((cartItem) => {
-    const cartTitle = document.createElement('h2');
-    const cartProduct = document.createElement('div');
-    const cartPartialSum = document.createElement('p');
-    const cartQuantity = document.createElement('p');
-    const cartTotalSum = document.createElement('div');
+  if (cartFromLS.length > 0) {
+    cartFromLS.map((cartItem) => {
+      const cartTitle = document.createElement('h2');
+      const cartProduct = document.createElement('div');
+      const cartPartialSum = document.createElement('p');
+      const cartQuantity = document.createElement('p');
+      const cartTotalSum = document.createElement('div');
 
-    cartContainer.appendChild(cartTitle);
-    cartContainer.appendChild(cartProduct);
-    cartContainer.appendChild(cartPartialSum);
-    cartContainer.appendChild(cartQuantity);
-    cartContainer.appendChild(cartTotalSum);
+      cartContainer.appendChild(cartTitle);
+      cartContainer.appendChild(cartProduct);
+      cartContainer.appendChild(cartPartialSum);
+      cartContainer.appendChild(cartQuantity);
+      cartContainer.appendChild(cartTotalSum);
 
-    totalSum += cartItem.price;
+      totalSum += cartItem.price;
 
-    cartProduct.innerText = cartItem.name;
-    cartPartialSum.innerText = 'price ' + cartItem.price;
-    cartQuantity.innerText = `Quantity ${cartItem.quantity}`;
-    cartTotalSum.innerText = totalSum;
-  });
+      cartProduct.innerText = cartItem.name;
+      cartPartialSum.innerText = 'price ' + cartItem.price;
+      cartQuantity.innerText = `Quantity ${cartItem.quantity}`;
+      cartTotalSum.innerText = totalSum;
+    });
+
+    // Mock button for payment
+    const payBtn = document.createElement('button');
+    cartContainer.appendChild(payBtn);
+    payBtn.innerText = 'Betala';
+
+    // Empties savedcart from LS
+    payBtn.addEventListener('click', function () {
+      localStorage.removeItem('savedCart');
+      cartContainer.innerHTML = '<p>Tack för din beställning!</p>';
+    });
+  } else {
+    cartContainer.innerHTML = '<p>Din varukorg är tom.</p>';
+  }
+
 }
 
 if (productsContainer) {
