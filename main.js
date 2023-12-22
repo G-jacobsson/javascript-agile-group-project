@@ -63,45 +63,60 @@ function addProduct(idFromBtn) {
 function renderCart() {
   let totalSum = 0;
 
-  cartFromLS.map((cartItem) => {
-    const cartTitle = document.createElement('h2');
-    const cartProduct = document.createElement('div');
-    const cartPartialSum = document.createElement('p');
-    const cartQuantity = document.createElement('p');
+  if (cartFromLS.length > 0) {
+    cartFromLS.map((cartItem) => {
+      const cartTitle = document.createElement('h2');
+      const cartProduct = document.createElement('div');
+      const cartPartialSum = document.createElement('p');
+      const cartQuantity = document.createElement('p');
 
-    cartContainer.appendChild(cartTitle);
-    cartContainer.appendChild(cartProduct);
-    cartContainer.appendChild(cartPartialSum);
-    cartContainer.appendChild(cartQuantity);
+      cartContainer.appendChild(cartTitle);
+      cartContainer.appendChild(cartProduct);
+      cartContainer.appendChild(cartPartialSum);
+      cartContainer.appendChild(cartQuantity);
 
-    // Calculate partial sum for separate items
-    const partialSum = cartItem.price * cartItem.quantity;
-    totalSum += partialSum;
+      // Calculate partial sum for separate items
+      const partialSum = cartItem.price * cartItem.quantity;
+      totalSum += partialSum;
 
-    // Format the price as Swedish currency
-    const formattedPrice = cartItem.price.toLocaleString('sv-SE', {
-      style: 'currency',
-      currency: 'SEK',
+      // Format the price as Swedish currency
+      const formattedPrice = cartItem.price.toLocaleString('sv-SE', {
+        style: 'currency',
+        currency: 'SEK',
+      });
+
+      cartProduct.innerText = cartItem.name;
+      cartPartialSum.innerText = `Pris ${formattedPrice} x ${
+        cartItem.quantity
+      } = ${partialSum.toLocaleString('sv-SE', {
+        style: 'currency',
+        currency: 'SEK',
+      })}`;
+      // Commented out. Do we really need it?
+      //    cartQuantity.innerText = `Antal ${cartItem.quantity}`;
     });
 
-    cartProduct.innerText = cartItem.name;
-    cartPartialSum.innerText = `Pris ${formattedPrice} x ${
-      cartItem.quantity
-    } = ${partialSum.toLocaleString('sv-SE', {
+    // Element for the total sum
+    const cartTotalSum = document.createElement('div');
+    cartTotalSum.innerText = `Totalt: ${totalSum.toLocaleString('sv-SE', {
       style: 'currency',
       currency: 'SEK',
     })}`;
-    // Commented out. Do we really need it?
-    //    cartQuantity.innerText = `Antal ${cartItem.quantity}`;
-  });
+    cartContainer.appendChild(cartTotalSum);
 
-  // Element for the total sum
-  const cartTotalSum = document.createElement('div');
-  cartTotalSum.innerText = `Totalt: ${totalSum.toLocaleString('sv-SE', {
-    style: 'currency',
-    currency: 'SEK',
-  })}`;
-  cartContainer.appendChild(cartTotalSum);
+    // Mock button for payment
+    const payBtn = document.createElement('button');
+    cartContainer.appendChild(payBtn);
+    payBtn.innerText = 'Betala';
+
+    // Empties savedcart from LS
+    payBtn.addEventListener('click', function () {
+      localStorage.removeItem('savedCart');
+      cartContainer.innerHTML = '<p>Tack för din beställning!</p>';
+    });
+  } else {
+    cartContainer.innerHTML = '<p>Din varukorg är tom.</p>';
+  }
 }
 
 if (productsContainer) {
