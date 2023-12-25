@@ -64,7 +64,7 @@ function renderCart() {
   const cartTitle = document.createElement('h2');
   cartTitle.innerText = 'Din varukorg';
   cartContainer.appendChild(cartTitle);
-
+  // Cart table
   const table = document.createElement('table');
   const tableHead = document.createElement('thead');
   const tableBody = document.createElement('tbody');
@@ -72,9 +72,9 @@ function renderCart() {
   table.appendChild(tableBody);
 
   const headerRow = document.createElement('tr');
-  ['Produkt', 'Pris', 'Antal', 'Delsumma'].forEach((text) => {
+  ['', 'Produkt', 'Pris', 'Delsumma'].forEach((text) => {
     const th = document.createElement('th');
-    this.innerText = text;
+    th.innerText = text;
     headerRow.appendChild(th);
   });
 
@@ -84,28 +84,50 @@ function renderCart() {
 
   if (cartFromLS.length > 0) {
     cartFromLS.map((cartItem) => {
-      const cartTitle = document.createElement('h2');
-      const cartProduct = document.createElement('div');
-      const cartPartialSum = document.createElement('p');
-      const cartQuantity = document.createElement('p');
+      const row = document.createElement('tr');
 
-      cartContainer.appendChild(cartTitle);
-      cartContainer.appendChild(cartProduct);
-      cartContainer.appendChild(cartPartialSum);
-      cartContainer.appendChild(cartQuantity);
+      // Product image
+      const imgData = document.createElement('td');
+      const image = document.createElement('img');
+      image.src = cartItem.imgUrl;
+      image.width = 50;
+      imgData.appendChild(image);
+      row.appendChild(imgData);
+
+      // Product
+      const cartProduct = document.createElement('td');
+      cartProduct.innerText = cartItem.name;
+      row.appendChild(cartProduct);
+
+      // Product price
+      const formattedPrice = document.createElement('td');
+      row.appendChild(formattedPrice);
+
+      // Partial sum
+      const cartPartialSum = document.createElement('td');
+      row.appendChild(cartPartialSum);
+      // const cartTitle = document.createElement('h2');
+      // const cartProduct = document.createElement('div');
+      // const cartPartialSum = document.createElement('p');
+      // const cartQuantity = document.createElement('p');
+
+      // cartContainer.appendChild(cartTitle);
+      // cartContainer.appendChild(cartProduct);
+      // cartContainer.appendChild(cartPartialSum);
+      // cartContainer.appendChild(cartQuantity);
 
       // Calculate partial sum for separate items
       const partialSum = cartItem.price * cartItem.quantity;
       totalSum += partialSum;
 
       // Format the price as Swedish currency
-      const formattedPrice = cartItem.price.toLocaleString('sv-SE', {
+      formattedPrice.innerText = cartItem.price.toLocaleString('sv-SE', {
         style: 'currency',
         currency: 'SEK',
       });
 
-      cartProduct.innerText = cartItem.name;
-      cartPartialSum.innerText = `Pris ${formattedPrice} x ${
+      // cartProduct.innerText = cartItem.name;
+      cartPartialSum.innerText = `Pris ${formattedPrice.innerText} x ${
         cartItem.quantity
       } = ${partialSum.toLocaleString('sv-SE', {
         style: 'currency',
@@ -113,7 +135,11 @@ function renderCart() {
       })}`;
       // Commented out. Do we really need it?
       //    cartQuantity.innerText = `Antal ${cartItem.quantity}`;
+
+      tableBody.appendChild(row);
     });
+
+    cartContainer.appendChild(table);
 
     // Element for the total sum
     const cartTotalSum = document.createElement('div');
@@ -136,25 +162,6 @@ function renderCart() {
   } else {
     cartContainer.innerHTML = '<p>Din varukorg är tom.</p>';
   }
-  cartFromLS.map((cartItem) => {
-    // const cartTitle = document.createElement('h2');
-    // const cartProduct = document.createElement('div');
-    // const cartPartialSum = document.createElement('p');
-    // const cartQuantity = document.createElement('p');
-    // const cartTotalSum = document.createElement('div');
-    // cartContainer.appendChild(cartTitle);
-    // cartContainer.appendChild(cartProduct);
-    // cartContainer.appendChild(cartPartialSum);
-    // cartContainer.appendChild(cartQuantity);
-    // cartContainer.appendChild(cartTotalSum);
-    // totalSum += cartItem.price;
-    // cartProduct.innerText = cartItem.name;
-    // cartPartialSum.innerText = 'price ' + cartItem.price;
-    // cartQuantity.innerText = `Quantity ${cartItem.quantity}`;
-    // cartTotalSum.innerText = totalSum;
-  });
-
-  cartContainer.appendChild(table);
 }
 
 if (productsContainer) {
