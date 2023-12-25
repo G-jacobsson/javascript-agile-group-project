@@ -72,7 +72,7 @@ function renderCart() {
   table.appendChild(tableBody);
 
   const headerRow = document.createElement('tr');
-  ['', 'Produkt', 'Pris', 'Delsumma'].forEach((text) => {
+  ['', 'Produkt', 'Pris', 'Delsumma', ''].forEach((text) => {
     const th = document.createElement('th');
     th.innerText = text;
     headerRow.appendChild(th);
@@ -106,15 +106,14 @@ function renderCart() {
       // Partial sum
       const cartPartialSum = document.createElement('td');
       row.appendChild(cartPartialSum);
-      // const cartTitle = document.createElement('h2');
-      // const cartProduct = document.createElement('div');
-      // const cartPartialSum = document.createElement('p');
-      // const cartQuantity = document.createElement('p');
 
-      // cartContainer.appendChild(cartTitle);
-      // cartContainer.appendChild(cartProduct);
-      // cartContainer.appendChild(cartPartialSum);
-      // cartContainer.appendChild(cartQuantity);
+      // Delete button with no functionality yet
+      const deleteProduct = document.createElement('td');
+      const deleteBtn = document.createElement('i');
+      deleteBtn.classList.add('fa-regular', 'fa-trash-can');
+
+      deleteProduct.appendChild(deleteBtn);
+      row.appendChild(deleteProduct);
 
       // Calculate partial sum for separate items
       const partialSum = cartItem.price * cartItem.quantity;
