@@ -60,7 +60,30 @@ function addProduct(idFromBtn) {
   localStorage.setItem('savedCart', JSON.stringify(cartFromLS));
 }
 
+// Delete product from cart
+function decreaseProductFromCart(id) {
+  const productIndex = cartFromLS.findIndex((product) => product.id === id);
+
+  if (productIndex > -1) {
+    if (cartFromLS[productIndex].quantity > 1) {
+      cartFromLS[productIndex].quantity -= 1;
+    } else {
+      cartFromLS.splice(productIndex, 1);
+    }
+    localStorage.setItem('savedCart', JSON.stringify(cartFromLS));
+    renderCart();
+  }
+
+}
+
+function clearProduct(item) {
+  while (item.firstChild) {
+    item.removeChild(item.firstChild);
+  }
+}
+
 function renderCart() {
+  clearProduct(cartContainer);
   const cartTitle = document.createElement('h2');
   cartTitle.innerText = 'Din varukorg';
   cartContainer.appendChild(cartTitle);
@@ -72,7 +95,9 @@ function renderCart() {
   table.appendChild(tableBody);
 
   const headerRow = document.createElement('tr');
-  ['', 'Produkt', 'Pris', 'Delsumma', ''].forEach((text) => {
+  const tableRows = ['', 'Produkt', 'Pris', 'Delsumma', ''];
+  
+  tableRows.forEach((text) => {
     const th = document.createElement('th');
     th.innerText = text;
     headerRow.appendChild(th);
@@ -111,6 +136,9 @@ function renderCart() {
       const deleteProduct = document.createElement('td');
       const deleteBtn = document.createElement('i');
       deleteBtn.classList.add('fa-regular', 'fa-trash-can');
+      deleteBtn.onclick = function () {
+        decreaseProductFromCart(cartItem.id);
+      };
 
       deleteProduct.appendChild(deleteBtn);
       row.appendChild(deleteProduct);
@@ -126,7 +154,7 @@ function renderCart() {
       });
 
       // cartProduct.innerText = cartItem.name;
-      cartPartialSum.innerText = `Pris ${formattedPrice.innerText} x ${
+      cartPartialSum.innerText = ` ${formattedPrice.innerText} x ${
         cartItem.quantity
       } = ${partialSum.toLocaleString('sv-SE', {
         style: 'currency',
