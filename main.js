@@ -2,11 +2,14 @@ import { products } from './products.js';
 
 const productsContainer = document.getElementById('products-container');
 const cartContainer = document.getElementById('cart-container');
+const cartItemCounter = document.getElementById('cart-item-counter');
 
 // Get from localStorage and parse back to array || if 'savedCart' doesn't exist= empty array
 const cartFromLS = JSON.parse(localStorage.getItem('savedCart')) || [];
 
 function renderProducts() {
+  updateCartCounter();
+
   products.map((product) => {
     // Product card
     const productDiv = document.createElement('div');
@@ -43,7 +46,15 @@ function renderProducts() {
     // </div>`;
   });
 }
+function updateCartCounter(){
 
+  // Calculate the total quantity of all items in the cart
+  const totalCartItems = cartFromLS.reduce((total, cartItem) => total + cartItem.quantity,0);
+
+  // Update the cart counter element
+  if(totalCartItems>0){
+  cartItemCounter.innerText = totalCartItems.toString();}
+}
 function addProduct(idFromBtn) {
   const foundItem = products.find((product) => product.id === idFromBtn);
   const foundCartItem = cartFromLS.find((product) => product.id === idFromBtn);
@@ -53,6 +64,8 @@ function addProduct(idFromBtn) {
   } else {
     cartFromLS.push(foundItem);
   }
+
+  updateCartCounter();
 
   // Saves updated cart in localStorage
   // key = choose a name to save
