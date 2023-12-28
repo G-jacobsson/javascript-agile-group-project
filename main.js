@@ -7,6 +7,7 @@ const cartItemCounter = document.getElementById('cart-item-counter');
 // Get from localStorage and parse back to array || if 'savedCart' doesn't exist= empty array
 const cartFromLS = JSON.parse(localStorage.getItem('savedCart')) || [];
 
+// Render the products page
 function renderProducts() {
   updateCartCounter();
 
@@ -17,12 +18,19 @@ function renderProducts() {
     const productPrice = document.createElement('p');
     const productImg = document.createElement('img');
     const productBtn = document.createElement('button');
+    const productDescription = document.createElement('div');
 
     productDiv.appendChild(productImg);
     productDiv.appendChild(productName);
     productDiv.appendChild(productPrice);
     productDiv.appendChild(productBtn);
+    productDiv.appendChild(productDescription);
     productsContainer.appendChild(productDiv);
+
+    productDiv.className = 'product-div';
+    productPrice.className = 'product-price';
+    productBtn.className = 'product-btn';
+    productDescription.className = 'product-description';
 
     productName.innerText = product.name;
     productPrice.innerText = product.price.toLocaleString('sv-SE', {
@@ -31,19 +39,23 @@ function renderProducts() {
     });
     productImg.src = product.imgUrl;
     productImg.width = 200;
-    productBtn.innerText = 'Buy';
+    productImg.classList.add('product-img');
+    productBtn.innerText = 'Köp';
+    productDescription.innerHTML = `<p>${product.description}</p>`;
+
 
     productBtn.addEventListener('click', function () {
       addProduct(product.id);
     });
 
-    // productsContainer.innerHTML += `
-    // <div>
-    //   <h3>${product.name}</h3>
-    //   <p>Pris: ${product.price}</p>
-    //   <img src="${product.imgUrl}" alt="g" width="100px"/>
-    //   <button onclick="addProduct(${product.id})">Add</button>
-    // </div>`;
+    productDiv.addEventListener('mouseenter', function () {
+      productDescription.style.display = 'block';
+    });
+
+    productDiv.addEventListener('mouseleave', function () {
+      productDescription.style.display = 'none';
+    });
+
   });
 }
 function updateCartCounter(){
@@ -51,10 +63,9 @@ function updateCartCounter(){
   // Calculate the total quantity of all items in the cart
   const totalCartItems = cartFromLS.reduce((total, cartItem) => total + cartItem.quantity,0);
 
-  // Update the cart counter element
-  if(totalCartItems>0){
+  // Update the cart counter number
   cartItemCounter.innerText = totalCartItems.toString();}
-}
+
 function addProduct(idFromBtn) {
   const foundItem = products.find((product) => product.id === idFromBtn);
   const foundCartItem = cartFromLS.find((product) => product.id === idFromBtn);
@@ -68,8 +79,6 @@ function addProduct(idFromBtn) {
   updateCartCounter();
 
   // Saves updated cart in localStorage
-  // key = choose a name to save
-  // value = serializing because we can't save an object
   localStorage.setItem('savedCart', JSON.stringify(cartFromLS));
 }
 
@@ -86,7 +95,6 @@ function decreaseProductFromCart(id) {
     localStorage.setItem('savedCart', JSON.stringify(cartFromLS));
     renderCart();
   }
-
 }
 
 function clearProduct(item) {
@@ -99,6 +107,7 @@ function renderCart() {
   clearProduct(cartContainer);
   const cartTitle = document.createElement('h2');
   cartTitle.innerText = 'Din varukorg';
+  cartTitle.className = 'cartTitle';
   cartContainer.appendChild(cartTitle);
   // Cart table
   const table = document.createElement('table');
@@ -127,8 +136,8 @@ function renderCart() {
       // Product image
       const imgData = document.createElement('td');
       const image = document.createElement('img');
+      image.className ='imgCart';
       image.src = cartItem.imgUrl;
-      image.width = 50;
       imgData.appendChild(image);
       row.appendChild(imgData);
 
@@ -148,6 +157,7 @@ function renderCart() {
       // Delete button with no functionality yet
       const deleteProduct = document.createElement('td');
       const deleteBtn = document.createElement('i');
+      deleteBtn.className = 'deleteBtn';
       deleteBtn.classList.add('fa-regular', 'fa-trash-can');
       deleteBtn.onclick = function () {
         decreaseProductFromCart(cartItem.id);
@@ -183,6 +193,7 @@ function renderCart() {
 
     // Element for the total sum
     const cartTotalSum = document.createElement('div');
+    cartTotalSum.className ='total'
     cartTotalSum.innerText = `Totalt: ${totalSum.toLocaleString('sv-SE', {
       style: 'currency',
       currency: 'SEK',
@@ -193,6 +204,7 @@ function renderCart() {
     const payBtn = document.createElement('button');
     cartContainer.appendChild(payBtn);
     payBtn.innerText = 'Betala';
+    payBtn.className = 'payBtn';
 
     // Empties savedcart from LS
     payBtn.addEventListener('click', function () {
