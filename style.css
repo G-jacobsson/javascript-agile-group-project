@@ -7,20 +7,20 @@ body {
 }
 
 /* ---------- HEADER ---------- */
-.page-header{
+.page-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #C4A484;
+  background-color: #c4a484;
   color: white;
   padding: 20px 0;
 }
 
-.cart-header{
+.cart-header {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #C4A484;
+  background-color: #c4a484;
   padding: 20px 0;
 }
 
@@ -30,7 +30,6 @@ body {
   margin: 0;
   margin-left: auto;
   cursor: pointer;
-
 }
 
 .page-header div {
@@ -45,7 +44,7 @@ header a {
   color: white;
 }
 
-#cart-logo-wrapper{
+#cart-logo-wrapper {
   margin-left: auto;
 }
 
@@ -54,14 +53,13 @@ header a {
   margin-left: auto;
 }
 
-#cart-logo-wrapper a{
+#cart-logo-wrapper a {
   margin-right: 10px;
 }
 
-
 #cart-item-counter {
   background-color: #fff;
-  color: #e91e63; 
+  color: #e91e63;
   padding: 5px 10px;
   margin-right: 20px;
   border-radius: 50%;
@@ -85,7 +83,7 @@ main {
   justify-content: space-between;
 }
 
-.product-div{
+.product-div {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -100,11 +98,11 @@ main {
   object-fit: cover;
 }
 
-.product-price{
+.product-price {
   margin-top: auto;
 }
 
-.product-btn{
+.product-btn {
   margin-top: auto;
   background-color: #d9d9d9;
   width: 40%;
@@ -139,13 +137,13 @@ main {
 }
 
 .cartTitle {
-  margin: 20px
+  margin: 20px;
 }
 
-table, td {
+table,
+td {
   padding: 10px;
   width: 100vw;
-
 }
 
 table tr:nth-child(even) {
@@ -170,26 +168,24 @@ table tr:nth-child(even) {
 
 .total {
   background-color: #aa8958;
-  color:azure;
+  color: azure;
   width: 35%;
   padding: 10px;
   border-radius: 5px;
   font-size: 18px;
   text-align: center;
   margin: 10px;
-
 }
-
 
 footer {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #C4A484; 
+  background-color: #c4a484;
   color: white;
-  text-align: center; 
-  padding: 40px 0;
+  text-align: center;
+  padding: 30px 0;
   position: fixed;
   bottom: 0;
   width: 100%;
@@ -201,8 +197,9 @@ footer a {
   margin: 0 10px;
 }
 
+/* ---------- PHONE ---------- */
 @media (max-width: 400px) {
-  h1{
+  h1 {
     font-size: 20px;
   }
 
@@ -211,29 +208,34 @@ footer a {
   }
 
   /* ---------- PRODUCTS ---------- */
-  .product-div{
-    width: 100%;
-  }
-  
-  /* ---------- CART ---------- */
-  .cart-header{
-    text-align: center;
-  }
-  
-  table {
-    width: 100%;
-  }
-  
-  table img {
-    display: none;
-  }
-  
-  thead, tbody, th, td, tr {
-    display:block;
+  .product-div {
     width: 100%;
   }
 
-  th, td {
+  /* ---------- CART ---------- */
+  .cart-header {
+    text-align: center;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  table img {
+    display: none;
+  }
+
+  thead,
+  tbody,
+  th,
+  td,
+  tr {
+    display: block;
+    width: 100%;
+  }
+
+  th,
+  td {
     width: 100%;
   }
 
@@ -251,8 +253,7 @@ footer a {
     text-align: center;
   }
 
-  footer{
+  footer {
     padding: 10px 0;
   }
 }
-
